@@ -1,5 +1,11 @@
 // import { useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import InstructionPage from './pages/InstructionPage'
+import PaymentPage from './pages/PaymentPage'
+import StopInfoPage from './pages/StopInfoPage'
+import NewsPage from './pages/NewsPage'
+import EventPage from './pages/EventPage'
+import LoginPage from './pages/LoginPage'
 import './App.css'
 
 function App () {
@@ -9,11 +15,12 @@ function App () {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/youbike/instruction" element=""></Route>
-          <Route path="/youbike/payment" element=""></Route>
-          <Route path="/youbike/stop-info" element=""></Route>
-          <Route path="/youbike/news" element=""></Route>
-          <Route path="/youbike/event" element=""></Route>
+          <Route path="/" element={<InstructionPage />}></Route>
+          <Route path="/payment" element={<PaymentPage />}></Route>
+          <Route path="/stop-info" element={<StopInfoPage />}></Route>
+          <Route path="/news" element={<NewsPage />}></Route>
+          <Route path="/event" element={<EventPage />}></Route>
+          <Route path="/login" element={<LoginPage/>}></Route>
         </Routes>
       </BrowserRouter>
     </>
