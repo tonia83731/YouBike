@@ -17,6 +17,7 @@ export default function StopInfoPage () {
     const getBikeInfoAsync = async () => {
       const res = await getBikeInfo()
       // console.log(res)
+      setStopData([...res])
       const set = new Set()
       res.map((data) => {
         set.add(data.sarea)
@@ -32,7 +33,7 @@ export default function StopInfoPage () {
       <MainSection>
         <MainTitle>站點資訊</MainTitle>
         <StopFilter props={area}/>
-        <StopTable/>
+        <StopTable props={stopData}/>
       </MainSection>
     </>
   )

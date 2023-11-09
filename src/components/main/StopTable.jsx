@@ -2,9 +2,11 @@ import styled from "styled-components";
 import { colorList } from "../../styled/colorLists";
 import { breakpoints } from "../../styled/breakpoints";
 
+import { replace } from "../../utilities/replace";
+
 const theadData = ['縣市', '區域', '站點名稱', '可借車輛', '可選空位']
 
-export default function StopTable() {
+export default function StopTable({props}) {
   return (
     <BikeTable>
       <BikeThead>
@@ -15,20 +17,17 @@ export default function StopTable() {
         </BikeTr>
       </BikeThead>
       <BikeTbody>
-        <BikeTr>
-          <BikeTd>台北市</BikeTd>
-          <BikeTd>大安區</BikeTd>
-          <BikeTd>YouBike2.0_捷運科技大樓站</BikeTd>
-          <BikeTd>28</BikeTd>
-          <BikeTd>28</BikeTd>
-        </BikeTr>
-        <BikeTr>
-          <BikeTd>台北市</BikeTd>
-          <BikeTd>大安區</BikeTd>
-          <BikeTd>YouBike2.0_捷運科技大樓站</BikeTd>
-          <BikeTd>28</BikeTd>
-          <BikeTd>28</BikeTd>
-        </BikeTr>
+        {props.map((prop) => {
+          return (
+            <BikeTr>
+              <BikeTd>台北市</BikeTd>
+              <BikeTd>{prop.sarea}</BikeTd>
+              <BikeTd>{replace(prop.sna)}</BikeTd>
+              <BikeTd>{prop.tot}</BikeTd>
+              <BikeTd>{prop.sbi}</BikeTd>
+            </BikeTr>
+          );
+        })}
       </BikeTbody>
     </BikeTable>
   );

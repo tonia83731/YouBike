@@ -6,7 +6,7 @@ import DistrictCheckbox from "./InputType/DistrictCheckbox"
 export default function StopSelection({props}) {
   return (
     <SelectionDiv>
-      <DistrictCheckbox prop="全部勾選" propId="all" />
+      <DistrictCheckbox prop="全部勾選" propId="all" isChecked="true"/>
       <SelectionGrid>
         {props.map((area) => {
           return <DistrictCheckbox prop={area} propId={area} />;

@@ -2,12 +2,12 @@ import styled from 'styled-components'
 import { colorList } from '../../../styled/colorLists'
 import { breakpoints } from '../../../styled/breakpoints'
 
-export default function DistrictCheckbox ({ prop, propId }) {
+export default function DistrictCheckbox ({ prop, propId, isChecked }) {
   return (
     <>
       <CheckboxLabel htmlFor={propId}>
         {prop}
-        <CheckboxInput type="checkbox" id={propId} name="option-input" value={propId}/>
+        <CheckboxInput type="checkbox" id={propId} name="option-input" value={propId} checked={isChecked}/>
         <CheckboxSpan></CheckboxSpan>
       </CheckboxLabel>
     </>
