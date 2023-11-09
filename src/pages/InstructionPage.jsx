@@ -14,11 +14,14 @@ export default function InstructionPage () {
   )
 }
 export const MainSection = styled.main`
+  width: 100%;
+  max-width: 1280px;
+  margin: auto;
   padding: 96px 32px 0;
   @media screen and (min-width: ${breakpoints.mobile}) {
     padding: 136px 124px 0;
   }
-`
+`;
 
 export const MainTitle = styled.h2`
   font-size: 18px;

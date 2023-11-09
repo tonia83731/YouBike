@@ -31,7 +31,7 @@ export default function Header () {
           <NavItem>
             <NavLink
               to="/"
-              className={({ isActive }) => (isActive ? "active" : "")}
+              className={({ isActive }) => (isActive ? 'active' : '')}
             >
               使用說明
             </NavLink>
@@ -39,7 +39,7 @@ export default function Header () {
           <NavItem>
             <NavLink
               to="/payment"
-              className={({ isActive }) => (isActive ? "active" : "")}
+              className={({ isActive }) => (isActive ? 'active' : '')}
             >
               收費方式
             </NavLink>
@@ -47,7 +47,7 @@ export default function Header () {
           <NavItem>
             <NavLink
               to="/stop-info"
-              className={({ isActive }) => (isActive ? "active" : "")}
+              className={({ isActive }) => (isActive ? 'active' : '')}
             >
               站點資訊
             </NavLink>
@@ -55,7 +55,7 @@ export default function Header () {
           <NavItem>
             <NavLink
               to="/news"
-              className={({ isActive }) => (isActive ? "active" : "")}
+              className={({ isActive }) => (isActive ? 'active' : '')}
             >
               最新消息
             </NavLink>
@@ -63,7 +63,7 @@ export default function Header () {
           <NavItem>
             <NavLink
               to="/event"
-              className={({ isActive }) => (isActive ? "active" : "")}
+              className={({ isActive }) => (isActive ? 'active' : '')}
             >
               活動專區
             </NavLink>
@@ -77,7 +77,7 @@ export default function Header () {
         <Link to="/login">登入</Link>
       </LoginBtn>
     </SiteHeader>
-  );
+  )
 }
 
 const SiteHeader = styled.header`
@@ -99,7 +99,7 @@ const SiteHeader = styled.header`
     height: 104px;
     grid-template-columns: 124px 1fr 3fr 3fr 124px;
   }
-`;
+`
 const LogoDiv = styled.div`
   grid-column: 2/3;
   svg {
@@ -111,7 +111,7 @@ const LogoDiv = styled.div`
       width: 95px;
     }
   }
-`;
+`
 const NavInput = styled.input`
   display: none;
   &:checked ~ nav {
@@ -121,14 +121,14 @@ const NavInput = styled.input`
     opacity: 1;
     transition: opacity .2s ease-out .15s;
   }
-`;
+`
 const NavLabel = styled.label`
   grid-column: 3/4;
   justify-self: end;
   @media screen and (min-width: ${breakpoints.desktop}) {
     display: none;
   }
-`;
+`
 const NavBar = styled.nav`
   position: absolute;
   top: 100%;
@@ -143,14 +143,14 @@ const NavBar = styled.nav`
     all: unset;
     background-color: ${colorList.white};
   }
-`;
+`
 const NavList = styled.ul`
   @media screen and (min-width: ${breakpoints.desktop}) {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-gap: 40px;
   }
-`;
+`
 
 const NavItem = styled.li`
   margin-bottom: 32px;
@@ -174,7 +174,7 @@ const NavItem = styled.li`
       }
     }
   }
-`;
+`
 const LoginBtn = styled.li`
   position: absolute;
   bottom: 128px;
@@ -212,4 +212,4 @@ const LoginBtn = styled.li`
       display: block;
     }
   }
-`;
+`
