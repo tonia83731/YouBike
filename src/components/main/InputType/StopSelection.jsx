@@ -1,12 +1,17 @@
 /* eslint-disable react/prop-types */
 import styled from 'styled-components'
-import { breakpoints } from '../../styled/breakpoints'
-import DistrictCheckbox from './InputType/DistrictCheckbox'
+import { breakpoints } from '../../../styled/breakpoints'
+import DistrictCheckbox from './DistrictCheckbox'
 
 export default function StopSelection ({ props, isAllChecked, onAllChange }) {
   return (
     <SelectionDiv>
-      <DistrictCheckbox prop="全部勾選" propId="all" isAllChecked={isAllChecked} onAllChange={onAllChange}/>
+      <DistrictCheckbox
+        prop="全部勾選"
+        propId="all"
+        isAllChecked={isAllChecked}
+        onAllChange={onAllChange}
+      />
       <SelectionGrid>
         {props.map((area) => {
           return <DistrictCheckbox key={area} prop={area} propId={area} />

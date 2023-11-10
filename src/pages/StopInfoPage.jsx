@@ -1,5 +1,8 @@
 /* eslint-disable array-callback-return */
 import { useState, useEffect } from 'react'
+import styled from 'styled-components'
+import { colorList } from '../styled/colorLists'
+import { breakpoints } from '../styled/breakpoints'
 
 import { taiwanCountiesAndCities } from '../data/ubikecityData'
 import Header from '../components/Header'
@@ -10,6 +13,7 @@ import StopTable from '../components/main/StopTable'
 import Pagination from '../components/main/pagination/pagination'
 
 export default function StopInfoPage () {
+  const [isLoading, setIsLoading] = useState(true)
   const [stopData, setStopData] = useState([])
   const [filterData, setFilterData] = useState([])
   const [area, setArea] = useState([])
@@ -93,35 +97,52 @@ export default function StopInfoPage () {
 
   useEffect(() => {
     const getBikeInfoAsync = async () => {
-      const res = await getTaipeiBikeInfo()
-      const res2 = await getNewTaipeiBikeInfo()
-      const res3 = await getTaoyuanBikeInfo()
-      const taipei = res.map((obj) => ({
-        ...obj,
-        city: '台北市'
-      }))
-      const newTaipei = res2.map((obj) => ({
-        ...obj, city: '新北市'
-      }))
-      const taoyuan = res3.map((obj) => ({
-        ...obj,
-        city: '桃園市'
-      }))
+      try {
+        const res = await getTaipeiBikeInfo()
+        const res2 = await getNewTaipeiBikeInfo()
+        const res3 = await getTaoyuanBikeInfo()
+        const taipei = res.map((obj) => ({
+          ...obj,
+          city: '台北市'
+        }))
+        const newTaipei = res2.map((obj) => ({
+          ...obj, city: '新北市'
+        }))
+        const taoyuan = res3.map((obj) => ({
+          ...obj,
+          city: '桃園市'
+        }))
 
-      setStopData([...taipei, ...newTaipei, ...taoyuan])
-      setFilterData([...taipei, ...newTaipei, ...taoyuan])
-      const set = new Set()
-      res.map((data) => {
-        set.add(data.sarea)
-      })
-      // res2.map((data) => {
-      //   set.add(data.sarea)
-      // })
-      // console.log(set)
-      setArea([...set])
+        setStopData([...taipei, ...newTaipei, ...taoyuan])
+        setFilterData([...taipei, ...newTaipei, ...taoyuan])
+        const set = new Set()
+        res.map((data) => {
+          set.add(data.sarea)
+        })
+        // res2.map((data) => {
+        //   set.add(data.sarea)
+        // })
+        // console.log(set)
+        setArea([...set])
+      } catch (error) {
+        console.error(error)
+      } finally {
+        setIsLoading(false)
+      }
     }
     getBikeInfoAsync()
   }, [])
+  if (isLoading === true) {
+    return (
+      <>
+        <Header />
+        <MainSection>
+          <MainTitle>站點資訊</MainTitle>
+          <Loading>Loading...</Loading>
+        </MainSection>
+      </>
+    )
+  }
   return (
     <>
       <Header />
@@ -152,3 +173,11 @@ export default function StopInfoPage () {
     </>
   )
 }
+
+const Loading = styled.p`
+  color: ${colorList.dark};
+  font-size: 16px;
+  @media screen and (min-width: ${breakpoints.mobile}) {
+    font-size: 18px;
+  }
+`

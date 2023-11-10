@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 import styled from 'styled-components'
-import { breakpoints } from '../../styled/breakpoints'
+import { breakpoints } from '../../../styled/breakpoints'
 
-import Search from './InputType/Search'
-import CityDropdown from './InputType/CityDropdown'
+import Search from './Search'
+import CityDropdown from './CityDropdown'
 
 export default function StopSearch ({
   onCityChange,
@@ -21,7 +21,7 @@ export default function StopSearch ({
       <CityDropdown
         onCityChange={onCityChange}
         isActive={isActive}
-        selectValue={selectValue}
+        selectValue={selectValue}p
         onOptionClick={onOptionClick}
         onDropdown={onDropdown}
         cityProps={cityProps}

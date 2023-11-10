@@ -1,9 +1,7 @@
 /* eslint-disable react/prop-types */
-
 import styled from 'styled-components'
 import { colorList } from '../../../styled/colorLists'
 import { breakpoints } from '../../../styled/breakpoints'
-import { taiwanCountiesAndCities } from '../../../data/ubikecityData'
 
 export default function CityDropdown ({ onCityChange, isActive, selectValue, onOptionClick, onDropdown, cityProps }) {
   return (

@@ -3,8 +3,8 @@ import styled from 'styled-components'
 import { breakpoints } from '../../styled/breakpoints'
 import Frame from '../../assets/Frame.svg?react'
 
-import StopSearch from './StopSearch'
-import StopSelection from './StopSelection'
+import StopSearch from './InputType/StopSearch'
+import StopSelection from './InputType/StopSelection'
 
 export default function StopFilter ({
   props,
