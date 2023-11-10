@@ -21,7 +21,7 @@ export const MainSection = styled.main`
   @media screen and (min-width: ${breakpoints.mobile}) {
     padding: 136px 124px 0;
   }
-`;
+`
 
 export const MainTitle = styled.h2`
   font-size: 18px;

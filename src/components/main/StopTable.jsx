@@ -1,38 +1,38 @@
-import styled from "styled-components";
-import { colorList } from "../../styled/colorLists";
-import { breakpoints } from "../../styled/breakpoints";
+/* eslint-disable react/prop-types */
+import styled from 'styled-components'
+import { colorList } from '../../styled/colorLists'
+import { breakpoints } from '../../styled/breakpoints'
 
-import { replace } from "../../utilities/replace";
+import { replace } from '../../utilities/replace'
 
 const theadData = ['縣市', '區域', '站點名稱', '可借車輛', '可選空位']
 
-export default function StopTable({props}) {
+export default function StopTable ({ props }) {
   return (
     <BikeTable>
       <BikeThead>
         <BikeTr>
-          {theadData.map((head) => {
-            return <BikeTh>{head}</BikeTh>;
+          {theadData.map((head, i) => {
+            return <BikeTh key={i}>{head}</BikeTh>
           })}
         </BikeTr>
       </BikeThead>
       <BikeTbody>
         {props.map((prop) => {
           return (
-            <BikeTr>
-              <BikeTd>台北市</BikeTd>
+            <BikeTr key={prop.sno}>
+              <BikeTd>{prop.city}</BikeTd>
               <BikeTd>{prop.sarea}</BikeTd>
               <BikeTd>{replace(prop.sna)}</BikeTd>
               <BikeTd>{prop.tot}</BikeTd>
               <BikeTd>{prop.sbi}</BikeTd>
             </BikeTr>
-          );
+          )
         })}
       </BikeTbody>
     </BikeTable>
-  );
+  )
 }
-
 
 const BikeTable = styled.table`
   border-collapse: separate;
@@ -45,7 +45,7 @@ const BikeTable = styled.table`
   @media screen and (min-width: ${breakpoints.mobile}) {
     font-size: 18px;
   }
-`;
+`
 const BikeThead = styled.thead`
   background-color: ${colorList.light_green};
   color: ${colorList.white};
@@ -53,16 +53,16 @@ const BikeThead = styled.thead`
   tr {
     height: 66px;
   }
-`;
+`
 const BikeTbody = styled.tbody`
   tr:nth-child(even) {
     background-color: ${colorList.gray};
   }
-`;
+`
 const BikeTr = styled.tr`
   border: none;
   height: 72px;
-`;
+`
 
 const BikeTh = styled.th`
   border: none;
@@ -71,7 +71,7 @@ const BikeTh = styled.th`
       display: none;
     }
   }
-`;
+`
 const BikeTd = styled.td`
   border: none;
   color: ${colorList.dark};
@@ -87,4 +87,4 @@ const BikeTd = styled.td`
       display: none;
     }
   }
-`;
+`

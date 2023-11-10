@@ -1,73 +1,61 @@
-import { useState } from "react";
+/* eslint-disable react/prop-types */
 
-import styled from "styled-components";
-import { colorList } from "../../../styled/colorLists";
-import { breakpoints } from "../../../styled/breakpoints";
-import { taiwanCountiesAndCities } from "../../../data/ubikecityData";
+import styled from 'styled-components'
+import { colorList } from '../../../styled/colorLists'
+import { breakpoints } from '../../../styled/breakpoints'
+import { taiwanCountiesAndCities } from '../../../data/ubikecityData'
 
-
-export default function CityDropdown() {
-  const [isActive, setIsActive] = useState(false)
-  const [selectValue, setSelectValue] = useState("選擇縣市");
-  const handleDropdown = () => {
-    setIsActive(!isActive)
-  }
-  const handleOptionClick = (e) => {
-    // console.log(e.target.value)
-    setSelectValue(e.target.value);
-    setIsActive(false)
-  }
+export default function CityDropdown ({ onCityChange, isActive, selectValue, onOptionClick, onDropdown, cityProps }) {
   return (
     <CitySelectDiv>
       <CitySelect
         role="combobox"
         aria-labelledby="select button"
         aria-haspopup="listbox"
-        aria-expanded={isActive ? "true" : "false"}
+        aria-expanded={isActive ? 'true' : 'false'}
         aria-controls="select-dropdown"
-        onClick={handleDropdown}
-        className={isActive ? "active" : ""}
+        onClick={onDropdown}
+        className={isActive ? 'active' : ''}
       >
-        <CitySelectSpan className={selectValue !== "選擇縣市" ? "selected" : ""}>
+        <CitySelectSpan className={selectValue !== '選擇縣市' ? 'selected' : ''}>
           {selectValue}
         </CitySelectSpan>
         <CitySelectArrow></CitySelectArrow>
       </CitySelect>
       <CityList role="listbox">
-        {taiwanCountiesAndCities.map((area, i) => {
+        {cityProps.map((area, i) => {
           return (
             <CityItem
               key={area.english}
               role="option"
-              onClick={handleOptionClick}
+              onClick={onOptionClick}
             >
               <CityInputRadio
                 type="radio"
                 id={area.english}
                 name="city-select"
                 value={area.chinese}
-                disabled={i > 1}
+                onChange={() => onCityChange?.(area.chinese)}
               />
               <CityLabel
                 htmlFor={area.english}
-                className={selectValue === area.chinese ? "selected" : ""}
+                className={selectValue === area.chinese ? 'selected' : ''}
               >
                 {area.chinese}
               </CityLabel>
             </CityItem>
-          );
+          )
         })}
       </CityList>
     </CitySelectDiv>
-  );
+  )
 }
-
 
 const CitySelectDiv = styled.div`
   position: relative;
   width: 100%;
   max-width: 100%;
-`;
+`
 const CitySelect = styled.button`
   width: 100%;
   height: 100%;
@@ -93,19 +81,19 @@ const CitySelect = styled.button`
   @media screen and (min-width: ${breakpoints.mobile}) {
     font-size: 18px;
   }
-`;
+`
 const CitySelectSpan = styled.span`
   &.selected {
     color: ${colorList.dark};
     font-weight: 500;
   }
-`;
+`
 const CitySelectArrow = styled.span`
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
   border-top: 6px solid ${colorList.gray_table_border};
   margin-right: 8px;
-`;
+`
 const CityList = styled.ul`
   position: absolute;
   z-index:1;
@@ -142,7 +130,7 @@ const CityList = styled.ul`
   @media screen and (min-width: ${breakpoints.mobile}) {
     font-size: 18px;
   }
-`; 
+`
 
 const CityItem = styled.li`
   position: relative;
@@ -154,13 +142,13 @@ const CityItem = styled.li`
     margin-bottom: 16px;
   }
   width: calc(100% - 16px);
-`;
+`
 const CityInputRadio = styled.input`
   display: none;
   &:disabled + label {
     color: ${colorList.gray_table_border};
   }
-`;
+`
 const CityLabel = styled.label`
   width: 100%;
   padding: 8px 0;
@@ -168,4 +156,4 @@ const CityLabel = styled.label`
   &.selected {
     font-weight: 500;
   }
-`;
+`

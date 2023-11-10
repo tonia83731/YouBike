@@ -1,19 +1,19 @@
+/* eslint-disable react/prop-types */
 import styled from 'styled-components'
 import { colorList } from '../../../styled/colorLists'
 import { breakpoints } from '../../../styled/breakpoints'
 
-export default function DistrictCheckbox ({ prop, propId, isChecked }) {
+export default function DistrictCheckbox ({ prop, propId, isAllChecked, onAllChange }) {
   return (
     <>
       <CheckboxLabel htmlFor={propId}>
         {prop}
-        <CheckboxInput type="checkbox" id={propId} name="option-input" value={propId} checked={isChecked}/>
+        <CheckboxInput type="checkbox" id={propId} name="option-input" value={propId} checked={isAllChecked} onChange={onAllChange}/>
         <CheckboxSpan></CheckboxSpan>
       </CheckboxLabel>
     </>
-  );
+  )
 }
-
 
 const CheckboxInput = styled.input`
   position: absolute;
@@ -31,7 +31,7 @@ const CheckboxInput = styled.input`
     border-width: 0 3px 3px 0;
   }
 }
-`;
+`
 const CheckboxLabel = styled.label`
   margin-left: 12px;
   display: block;
@@ -50,7 +50,7 @@ const CheckboxLabel = styled.label`
       grid-column: 1/3;
     }
   }
-`;
+`
 const CheckboxSpan = styled.span`
   position: absolute;
   top: 50%;
@@ -74,4 +74,4 @@ const CheckboxSpan = styled.span`
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
   }
-`;
+`

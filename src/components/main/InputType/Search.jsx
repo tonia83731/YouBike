@@ -1,25 +1,35 @@
-import styled from "styled-components";
-import { colorList } from "../../../styled/colorLists";
-import { breakpoints } from "../../../styled/breakpoints";
+import styled from 'styled-components'
+import { colorList } from '../../../styled/colorLists'
+import { breakpoints } from '../../../styled/breakpoints'
 
 import SearchIcon from '../../../assets/searchIcon.svg?react'
 
-export default function Search() {
+// eslint-disable-next-line react/prop-types
+export default function Search ({ searchValue, onSearchChange, onSearchClick }) {
   return (
     <SearchDiv>
-      <SearchInputText type="text" placeholder="搜尋站點"/>
-      <SearchBtn type="button">
+      <SearchInputText
+        type="text"
+        placeholder="搜尋站點"
+        value={searchValue}
+        onChange={onSearchChange}
+      />
+      <SearchBtn
+        type="button"
+        onClick={onSearchClick}
+        className={searchValue === '' ? '' : 'typing'}
+      >
         <SearchIcon />
       </SearchBtn>
     </SearchDiv>
-  );
+  )
 }
 
 const SearchDiv = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
-`;
+`
 const SearchInputText = styled.input`
   height: 40px;
   font-size: 16px;
@@ -44,7 +54,7 @@ const SearchInputText = styled.input`
   @media screen and (min-width: ${breakpoints.mobile}) {
     font-size: 18px;
   }
-`;
+`
 const SearchBtn = styled.button`
   height: 40px;
   position: absolute;
@@ -59,4 +69,11 @@ const SearchBtn = styled.button`
     width: 18px;
     height: auto;
   }
-`;
+  &.typing {
+    svg {
+      path {
+        fill: ${colorList.light_green};
+      }
+    }
+  }
+`

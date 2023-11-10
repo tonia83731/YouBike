@@ -1,14 +1,36 @@
-import styled from "styled-components"
-import { breakpoints } from "../../styled/breakpoints"
+/* eslint-disable react/prop-types */
+import styled from 'styled-components'
+import { breakpoints } from '../../styled/breakpoints'
 
-import Search from "./InputType/Search"
-import CityDropdown from "./InputType/CityDropdown"
+import Search from './InputType/Search'
+import CityDropdown from './InputType/CityDropdown'
 
-export default function StopSearch() {
+export default function StopSearch ({
+  onCityChange,
+  searchValue,
+  onSearchChange,
+  onSearchClick,
+  isActive,
+  selectValue,
+  onOptionClick,
+  onDropdown,
+  cityProps
+}) {
   return (
     <StopSearchDiv>
-      <CityDropdown />
-      <Search />
+      <CityDropdown
+        onCityChange={onCityChange}
+        isActive={isActive}
+        selectValue={selectValue}
+        onOptionClick={onOptionClick}
+        onDropdown={onDropdown}
+        cityProps={cityProps}
+      />
+      <Search
+        searchValue={searchValue}
+        onSearchChange={onSearchChange}
+        onSearchClick={onSearchClick}
+      />
     </StopSearchDiv>
   )
 }
@@ -23,4 +45,4 @@ const StopSearchDiv = styled.div`
     grid-template-rows: unset;
     grid-gap: 16px;
   }
-`;
+`

@@ -1,19 +1,19 @@
-import styled from "styled-components"
-import { colorList } from "../../styled/colorLists"
-import { breakpoints } from "../../styled/breakpoints"
-import DistrictCheckbox from "./InputType/DistrictCheckbox"
+/* eslint-disable react/prop-types */
+import styled from 'styled-components'
+import { breakpoints } from '../../styled/breakpoints'
+import DistrictCheckbox from './InputType/DistrictCheckbox'
 
-export default function StopSelection({props}) {
+export default function StopSelection ({ props, isAllChecked, onAllChange }) {
   return (
     <SelectionDiv>
-      <DistrictCheckbox prop="全部勾選" propId="all" isChecked="true"/>
+      <DistrictCheckbox prop="全部勾選" propId="all" isAllChecked={isAllChecked} onAllChange={onAllChange}/>
       <SelectionGrid>
         {props.map((area) => {
-          return <DistrictCheckbox prop={area} propId={area} />;
+          return <DistrictCheckbox key={area} prop={area} propId={area} />
         })}
       </SelectionGrid>
     </SelectionDiv>
-  );
+  )
 }
 
 const SelectionDiv = styled.div`
@@ -21,7 +21,7 @@ const SelectionDiv = styled.div`
   @media screen and (min-width: ${breakpoints.mobile}) {
     margin: 32px 0;
   }
-`;
+`
 const SelectionGrid = styled.div`
   margin-top: 24px;
   display: grid;
@@ -31,9 +31,9 @@ const SelectionGrid = styled.div`
   @media screen and (min-width: ${breakpoints.mobile}) {
     grid-template-columns: repeat(4, 1fr);
   }
-`;
+`
 
-
-
-
-
+// const SelectionBtn = styled.button`
+//   grid-column: 4/5;
+//   background-color: transparent;
+// `

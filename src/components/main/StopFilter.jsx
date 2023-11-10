@@ -1,33 +1,61 @@
-import styled from "styled-components"
-import { breakpoints } from "../../styled/breakpoints"
+/* eslint-disable react/prop-types */
+import styled from 'styled-components'
+import { breakpoints } from '../../styled/breakpoints'
 import Frame from '../../assets/Frame.svg?react'
 
-import StopSearch from "./StopSearch"
-import StopSelection from "./StopSelection"
+import StopSearch from './StopSearch'
+import StopSelection from './StopSelection'
 
-export default function StopFilter({props}) {
+export default function StopFilter ({
+  props,
+  onCityChange,
+  searchValue,
+  onSearchChange,
+  onSearchClick,
+  isAllChecked,
+  onAllChange,
+  isActive,
+  selectValue,
+  onOptionClick,
+  onDropdown,
+  cityProps
+}) {
   return (
     <StopFilterDiv>
       <div>
-        <StopSearch />
-        <StopSelection props={props} />
+        <StopSearch
+          onCityChange={onCityChange}
+          searchValue={searchValue}
+          onSearchChange={onSearchChange}
+          onSearchClick={onSearchClick}
+          isActive={isActive}
+          selectValue={selectValue}
+          onOptionClick={onOptionClick}
+          onDropdown={onDropdown}
+          cityProps={cityProps}
+        />
+        <StopSelection
+          props={props}
+          isAllChecked={isAllChecked}
+          onAllChange={onAllChange}
+        />
       </div>
       <StopFilterImg>
         <Frame />
       </StopFilterImg>
     </StopFilterDiv>
-  );
+  )
 }
 
 const StopFilterDiv = styled.div`
-  @media screen and (min-width: ${breakpoints.desktop}){
+  @media screen and (min-width: ${breakpoints.desktop}) {
     display: grid;
     grid-template-columns: 45% 55%;
     grid-gap: 150px;
   }
-`;
+`
 const StopFilterImg = styled.div`
-  display:none;
+  display: none;
   @media screen and (min-width: ${breakpoints.desktop}) {
     width: 100%;
     display: flex;
@@ -37,4 +65,4 @@ const StopFilterImg = styled.div`
       height: auto;
     }
   }
-`;
+`
