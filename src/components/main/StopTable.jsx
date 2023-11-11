@@ -38,12 +38,13 @@ const BikeTable = styled.table`
   border-collapse: separate;
   border-spacing: 0;
   width: 100%;
-  border-radius: 28px;
+  border-radius: 8px;
   overflow: hidden;
   border: 0.5px solid ${colorList.gray_table_border};
   font-size: 16px;
   @media screen and (min-width: ${breakpoints.mobile}) {
     font-size: 18px;
+    border-radius: 28px;
   }
 `
 const BikeThead = styled.thead`

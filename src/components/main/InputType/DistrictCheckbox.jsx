@@ -8,7 +8,7 @@ export default function DistrictCheckbox ({ prop, propId, isChecked, onCheckChan
     <>
       <CheckboxLabel htmlFor={propId}>
         {prop}
-        <CheckboxInput type="checkbox" id={propId} name="option-input" value={propId} checked={isChecked} onChange={onCheckChange}/>
+        <CheckboxInput type="checkbox" id={propId} name="option-input" value={propId} checked={isChecked} onChange={() => onCheckChange?.(propId)}/>
         <CheckboxSpan></CheckboxSpan>
       </CheckboxLabel>
     </>

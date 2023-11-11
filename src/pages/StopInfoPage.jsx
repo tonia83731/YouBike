@@ -11,6 +11,7 @@ import { getTaipeiBikeInfo, getNewTaipeiBikeInfo, getTaoyuanBikeInfo } from '../
 import StopFilter from '../components/main/StopFilter'
 import StopTable from '../components/main/StopTable'
 import Pagination from '../components/main/pagination/pagination'
+import OptionModal from '../components/main/Modal/OptionModal'
 
 export default function StopInfoPage () {
   const [isLoading, setIsLoading] = useState(true)
@@ -22,6 +23,7 @@ export default function StopInfoPage () {
   const [isAllChecked, setAllChecked] = useState(true)
   const [isActive, setIsActive] = useState(false)
   const [selectValue, setSelectValue] = useState('選擇縣市')
+  const [isToggle, setIsToggle] = useState(false)
 
   const perPage = 10
   const lastIndex = currentPage * perPage
@@ -30,6 +32,12 @@ export default function StopInfoPage () {
   const nPage = Math.ceil(filterData.length / perPage)
   const nums = [...Array(nPage + 1).keys()].slice(1)
 
+  const handleMoreOptionClick = () => {
+    setIsToggle(!isToggle)
+  }
+  const handleToggleClose = () => {
+    setIsToggle(false)
+  }
   const handleDropdown = () => {
     setIsActive(!isActive)
   }
@@ -64,6 +72,9 @@ export default function StopInfoPage () {
     setSearchValue('')
     setFilterData(stopData)
     setSelectValue('選擇縣市')
+  }
+  const handleDistrictChange = (district) => {
+    console.log(district)
   }
   const handleSearchClick = () => {
     if (searchValue === '') return
@@ -186,6 +197,7 @@ export default function StopInfoPage () {
       <Header />
       <MainSection>
         <MainTitle>站點資訊</MainTitle>
+        {isToggle && <OptionModal props={area} onToggleClose={handleToggleClose}/>}
         <StopFilter
           props={area}
           onCityChange={handleCityChange}
@@ -195,11 +207,13 @@ export default function StopInfoPage () {
           onSearchKeyDown={handleSearchKeyDown}
           isAllChecked={isAllChecked}
           onAllChange={handleAllChange}
+          onDistrictChange={handleDistrictChange}
           isActive={isActive}
           selectValue={selectValue}
           onOptionClick={handleOptionClick}
           onDropdown={handleDropdown}
           cityProps={taiwanCountiesAndCities}
+          onMoreOptionClick={handleMoreOptionClick}
         />
         <StopTable props={stop} />
         <Pagination

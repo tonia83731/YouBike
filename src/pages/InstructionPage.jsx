@@ -14,6 +14,7 @@ export default function InstructionPage () {
   )
 }
 export const MainSection = styled.main`
+  position: relative;
   width: 100%;
   max-width: 1280px;
   margin: auto;

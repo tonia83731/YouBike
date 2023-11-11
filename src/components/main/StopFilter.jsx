@@ -21,7 +21,8 @@ export default function StopFilter ({
   selectValue,
   onOptionClick,
   onDropdown,
-  cityProps
+  cityProps,
+  onMoreOptionClick
 }) {
   return (
     <StopFilterDiv>
@@ -44,6 +45,7 @@ export default function StopFilter ({
           onAllChange={onAllChange}
           isDistrictCheck={isDistrictCheck}
           onDistrictChange={onDistrictChange}
+          onMoreOptionClick={onMoreOptionClick}
         />
       </div>
       <StopFilterImg>
