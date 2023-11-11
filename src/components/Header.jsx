@@ -176,7 +176,7 @@ const NavItem = styled.li`
   }
 `
 const LoginBtn = styled.li`
-  position: absolute;
+  position: fixed;
   bottom: 128px;
   background: ${colorList.white};
   padding: 10px 0;
