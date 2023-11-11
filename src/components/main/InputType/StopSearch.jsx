@@ -10,6 +10,7 @@ export default function StopSearch ({
   searchValue,
   onSearchChange,
   onSearchClick,
+  onSearchKeyDown,
   isActive,
   selectValue,
   onOptionClick,
@@ -30,6 +31,7 @@ export default function StopSearch ({
         searchValue={searchValue}
         onSearchChange={onSearchChange}
         onSearchClick={onSearchClick}
+        onSearchKeyDown={onSearchKeyDown}
       />
     </StopSearchDiv>
   )

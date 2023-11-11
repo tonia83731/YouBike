@@ -12,8 +12,11 @@ export default function StopFilter ({
   searchValue,
   onSearchChange,
   onSearchClick,
+  onSearchKeyDown,
   isAllChecked,
   onAllChange,
+  isDistrictCheck,
+  onDistrictChange,
   isActive,
   selectValue,
   onOptionClick,
@@ -28,6 +31,7 @@ export default function StopFilter ({
           searchValue={searchValue}
           onSearchChange={onSearchChange}
           onSearchClick={onSearchClick}
+          onSearchKeyDown={onSearchKeyDown}
           isActive={isActive}
           selectValue={selectValue}
           onOptionClick={onOptionClick}
@@ -38,6 +42,8 @@ export default function StopFilter ({
           props={props}
           isAllChecked={isAllChecked}
           onAllChange={onAllChange}
+          isDistrictCheck={isDistrictCheck}
+          onDistrictChange={onDistrictChange}
         />
       </div>
       <StopFilterImg>

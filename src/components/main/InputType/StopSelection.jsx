@@ -3,18 +3,32 @@ import styled from 'styled-components'
 import { breakpoints } from '../../../styled/breakpoints'
 import DistrictCheckbox from './DistrictCheckbox'
 
-export default function StopSelection ({ props, isAllChecked, onAllChange }) {
+export default function StopSelection ({
+  props,
+  isAllChecked,
+  onAllChange,
+  onDistrictChange,
+  isDistrictCheck
+}) {
   return (
     <SelectionDiv>
       <DistrictCheckbox
         prop="全部勾選"
         propId="all"
-        isAllChecked={isAllChecked}
-        onAllChange={onAllChange}
+        isChecked={isAllChecked}
+        onCheckChange={onAllChange}
       />
       <SelectionGrid>
         {props.map((area) => {
-          return <DistrictCheckbox key={area} prop={area} propId={area} />
+          return (
+            <DistrictCheckbox
+              key={area}
+              prop={area}
+              propId={area}
+              onCheckChange={onDistrictChange}
+              isChecked={isDistrictCheck}
+            />
+          )
         })}
       </SelectionGrid>
     </SelectionDiv>

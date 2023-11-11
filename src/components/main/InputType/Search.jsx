@@ -5,7 +5,7 @@ import { breakpoints } from '../../../styled/breakpoints'
 import SearchIcon from '../../../assets/searchIcon.svg?react'
 
 // eslint-disable-next-line react/prop-types
-export default function Search ({ searchValue, onSearchChange, onSearchClick }) {
+export default function Search ({ searchValue, onSearchChange, onSearchClick, onSearchKeyDown }) {
   return (
     <SearchDiv>
       <SearchInputText
@@ -13,6 +13,7 @@ export default function Search ({ searchValue, onSearchChange, onSearchClick }) 
         placeholder="搜尋站點"
         value={searchValue}
         onChange={onSearchChange}
+        onKeyDown={onSearchKeyDown}
       />
       <SearchBtn
         type="button"

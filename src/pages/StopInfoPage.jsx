@@ -66,6 +66,7 @@ export default function StopInfoPage () {
     setSelectValue('選擇縣市')
   }
   const handleSearchClick = () => {
+    if (searchValue === '') return
     const filterStop = stopData.filter((stop) => {
       return (
         stop.city.includes(searchValue) ||
@@ -73,12 +74,49 @@ export default function StopInfoPage () {
         stop.sna.includes(searchValue)
       )
     })
-    setFilterData(filterStop)
-    // const selectSet = new Set()
-    // filterStop.map((stop) => selectSet.add(stop.city))
-    // const selectArr = [...selectSet]
     setAllChecked(false)
-    // setSelectValue(selectArr[0])
+    setFilterData(filterStop)
+    const selectSet = new Set()
+    filterStop.map((stop) => selectSet.add(stop.city))
+    const selectArr = [...selectSet]
+    const city = taiwanCountiesAndCities.find((city) => city.chinese.includes(searchValue) || city.english.toLowerCase().includes(searchValue))
+    if (selectArr.length > 0) {
+      setSelectValue(selectArr[0])
+    } else if (city !== undefined) {
+      setSelectValue(city.chinese)
+    } else {
+      setSelectValue('選擇縣市')
+    }
+  }
+  const handleSearchKeyDown = (e) => {
+    if (e.target.value === '') return
+    if (e.key === 'Enter') {
+      const filterStop = stopData.filter((stop) => {
+        return (
+          stop.city.includes(searchValue) ||
+          stop.sarea.includes(searchValue) ||
+          stop.sna.includes(searchValue)
+        )
+      })
+      setFilterData(filterStop)
+      setAllChecked(false)
+      const selectSet = new Set()
+      filterStop.map((stop) => selectSet.add(stop.city))
+      const selectArr = [...selectSet]
+      const city = taiwanCountiesAndCities.find(
+        (city) =>
+          city.chinese.includes(searchValue) ||
+          city.english.toLowerCase().includes(searchValue)
+      )
+
+      if (selectArr.length > 0) {
+        setSelectValue(selectArr[0])
+      } else if (city !== undefined) {
+        setSelectValue(city.chinese)
+      } else {
+        setSelectValue('選擇縣市')
+      }
+    }
   }
   const handleArrowClick = (e) => {
     // console.log(e.target.id)
@@ -154,6 +192,7 @@ export default function StopInfoPage () {
           searchValue={searchValue}
           onSearchChange={handleSearchChange}
           onSearchClick={handleSearchClick}
+          onSearchKeyDown={handleSearchKeyDown}
           isAllChecked={isAllChecked}
           onAllChange={handleAllChange}
           isActive={isActive}
