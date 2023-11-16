@@ -31,7 +31,7 @@ export default function StopSelection ({
               prop={area}
               propId={area}
               onCheckChange={onDistrictChange}
-              isChecked={isDistrictCheck}
+              isChecked={isDistrictCheck[area] || false}
             />
           )
         })}

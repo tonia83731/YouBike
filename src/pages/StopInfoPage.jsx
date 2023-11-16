@@ -12,6 +12,7 @@ import StopFilter from '../components/main/StopFilter'
 import StopTable from '../components/main/StopTable'
 import Pagination from '../components/main/pagination/pagination'
 import OptionModal from '../components/main/Modal/OptionModal'
+// import { check } from 'prettier'
 
 export default function StopInfoPage () {
   const [isLoading, setIsLoading] = useState(true)
@@ -21,6 +22,7 @@ export default function StopInfoPage () {
   const [searchValue, setSearchValue] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [isAllChecked, setAllChecked] = useState(true)
+  const [districtCheckItems, setDistrictCheckItems] = useState({})
   const [isActive, setIsActive] = useState(false)
   const [selectValue, setSelectValue] = useState('選擇縣市')
   const [isToggle, setIsToggle] = useState(false)
@@ -72,10 +74,17 @@ export default function StopInfoPage () {
     setSearchValue('')
     setFilterData(stopData)
     setSelectValue('選擇縣市')
+    setDistrictCheckItems({})
   }
-  const handleDistrictChange = (district) => {
-    console.log(district)
+  const handleDistrictChange = (e) => {
+    const district = e.target.value
+
+    setDistrictCheckItems((prevItems) => ({
+      ...prevItems,
+      [district]: e.target.checked
+    }))
   }
+
   const handleSearchClick = () => {
     if (searchValue === '') return
     const filterStop = stopData.filter((stop) => {
@@ -145,6 +154,24 @@ export default function StopInfoPage () {
   }
 
   useEffect(() => {
+    const checkedDistricts = Object.keys(districtCheckItems).filter((district) => districtCheckItems[district])
+    // console.log(checkedDistricts)
+    if (checkedDistricts.length !== 0) {
+      setAllChecked(false)
+    }
+    if (checkedDistricts.length === 0) {
+      setFilterData(stopData)
+      return
+    }
+
+    const filterData = stopData.filter((stop) => checkedDistricts.includes(stop.sarea))
+    setFilterData(filterData)
+    const selectSet = new Set()
+    filterData.map((stop) => selectSet.add(stop.city))
+    const selectArr = [...selectSet]
+    setSelectValue(selectArr[0])
+  }, [districtCheckItems, stopData])
+  useEffect(() => {
     const getBikeInfoAsync = async () => {
       try {
         const res = await getTaipeiBikeInfo()
@@ -168,9 +195,18 @@ export default function StopInfoPage () {
         res.map((data) => {
           set.add(data.sarea)
         })
+        // const TaipeiArr = [...set]
+        // console.log(TaipeiArr)
+        // const set2 = new Set()
         // res2.map((data) => {
-        //   set.add(data.sarea)
+        //   set2.add(data.sarea)
         // })
+        // const newTaipeiArr = [...set2]
+        // const set3 = new Set()
+        // res3.map((data) => {
+        //   set3.add(data.sarea)
+        // })
+        // const taoyuanArr = [...set3]
         // console.log(set)
         setArea([...set])
       } catch (error) {
@@ -207,6 +243,7 @@ export default function StopInfoPage () {
           onSearchKeyDown={handleSearchKeyDown}
           isAllChecked={isAllChecked}
           onAllChange={handleAllChange}
+          isDistrictCheck={districtCheckItems}
           onDistrictChange={handleDistrictChange}
           isActive={isActive}
           selectValue={selectValue}
