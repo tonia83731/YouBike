@@ -9,7 +9,6 @@ export default function StopSelection ({
   isAllChecked,
   onAllChange,
   onDistrictChange,
-  isDistrictCheck,
   onMoreOptionClick
 }) {
   return (
@@ -24,14 +23,20 @@ export default function StopSelection ({
         {isAllChecked ? <MoreBtn onClick={onMoreOptionClick}>更多選項</MoreBtn> : ''}
       </TopFlex>
       <SelectionGrid>
-        {props.map((area) => {
+        {props.map((area, i) => {
+          const lastIndex = props.length - 1
           return (
             <DistrictCheckbox
-              key={area}
-              prop={area}
-              propId={area}
-              onCheckChange={onDistrictChange}
-              isChecked={isDistrictCheck[area] || false}
+              key={area.sarea}
+              prop={area.sarea}
+              propId={area.sarea}
+              onCheckChange={(e) =>
+                onDistrictChange(area.sarea, e.target.checked)
+              }
+              specificStyle={{
+                gridColumn:
+                  (area.city === '台北市' && i === lastIndex) ? '1/3' : 'auto'
+              }}
             />
           )
         })}

@@ -7,26 +7,32 @@ import { breakpoints } from '../styled/breakpoints'
 import { taiwanCountiesAndCities } from '../data/ubikecityData'
 import Header from '../components/Header'
 import { MainSection, MainTitle } from './InstructionPage'
-import { getTaipeiBikeInfo, getNewTaipeiBikeInfo, getTaoyuanBikeInfo } from '../api/getYoubikeInfo'
+import {
+  getTaipeiBikeInfo,
+  getNewTaipeiBikeInfo,
+  getTaoyuanBikeInfo
+} from '../api/getYoubikeInfo'
 import StopFilter from '../components/main/StopFilter'
 import StopTable from '../components/main/StopTable'
 import Pagination from '../components/main/pagination/pagination'
 import OptionModal from '../components/main/Modal/OptionModal'
-// import { check } from 'prettier'
 
 export default function StopInfoPage () {
   const [isLoading, setIsLoading] = useState(true)
   const [stopData, setStopData] = useState([])
   const [filterData, setFilterData] = useState([])
   const [area, setArea] = useState([])
+  const [sarea, setSarea] = useState([])
   const [searchValue, setSearchValue] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [isAllChecked, setAllChecked] = useState(true)
+  // eslint-disable-next-line no-unused-vars
   const [districtCheckItems, setDistrictCheckItems] = useState({})
   const [isActive, setIsActive] = useState(false)
   const [selectValue, setSelectValue] = useState('選擇縣市')
   const [isToggle, setIsToggle] = useState(false)
 
+  // Pagination setting here
   const perPage = 10
   const lastIndex = currentPage * perPage
   const firstIndex = lastIndex - perPage
@@ -34,57 +40,102 @@ export default function StopInfoPage () {
   const nPage = Math.ceil(filterData.length / perPage)
   const nums = [...Array(nPage + 1).keys()].slice(1)
 
+  // More option toggle open here
   const handleMoreOptionClick = () => {
     setIsToggle(!isToggle)
   }
+  // More option toggle close here
   const handleToggleClose = () => {
     setIsToggle(false)
   }
+  // Dropdown menu bar active here
   const handleDropdown = () => {
     setIsActive(!isActive)
   }
+  // Dropdown menu option click here
   const handleOptionClick = (e) => {
-    // console.log(e.target.value)
     setSelectValue(e.target.value)
     setIsActive(false)
   }
+  // Dropdown menu option change here
   const handleCityChange = (city) => {
     setAllChecked(false)
+    setDistrictCheckItems({})
     if (city === '台北市') {
       const filterStop = stopData.filter((data) => data.city === '台北市')
-      // console.log(filterData)
+      const filterArea = area.filter((area) => area.city === '台北市')
+      console.log(filterStop)
       setFilterData(filterStop)
+      setSarea(filterArea)
     } else if (city === '新北市') {
       const filterStop = stopData.filter((data) => data.city === '新北市')
+      const filterArea = area.filter((area) => area.city === '新北市')
       // console.log(filterData)
+      console.log(filterStop)
       setFilterData(filterStop)
+      setSarea(filterArea)
     } else if (city === '桃園市') {
       const filterStop = stopData.filter((data) => data.city === '桃園市')
+      const filterArea = area.filter((area) => area.city === '桃園市')
       // console.log(filterData)
+      console.log(filterStop)
       setFilterData(filterStop)
+      setSarea(filterArea)
     } else {
       setFilterData([])
+      setSarea([])
     }
   }
-  const handleSearchChange = (e) => {
-    setSearchValue(e.target.value)
-  }
+  // '全部勾選' option change => when click then everything change back to default
   const handleAllChange = () => {
     setAllChecked(true)
     setSearchValue('')
     setFilterData(stopData)
     setSelectValue('選擇縣市')
     setDistrictCheckItems({})
+    const filterArea = area.filter((area) => area.city === '台北市')
+    setSarea(filterArea)
   }
-  const handleDistrictChange = (e) => {
-    const district = e.target.value
-
-    setDistrictCheckItems((prevItems) => ({
-      ...prevItems,
-      [district]: e.target.checked
+  // Option checked/unchecked here
+  const handleDistrictChange = (district, isChecked) => {
+    // console.log(district, isChecked)
+    setDistrictCheckItems((prevValues) => ({
+      ...prevValues,
+      [district]: isChecked
     }))
-  }
+    setDistrictCheckItems((prevValues) => {
+      const checkedDistricts = Object.keys(prevValues).filter(
+        (district) => prevValues[district]
+      )
+      if (checkedDistricts.length === 0) {
+        setAllChecked(true)
+        setSelectValue('選擇縣市')
+        setFilterData(stopData)
+        return
+      }
+      if (checkedDistricts.length > 0) setAllChecked(false)
 
+      // Use checkedDistricts directly to filter stopData
+      const filterData = stopData.filter((stop) =>
+        checkedDistricts.includes(stop.sarea)
+      )
+
+      setFilterData(filterData)
+
+      const selectSet = new Set()
+      filterData.forEach((stop) => selectSet.add(stop.city))
+      const selectArr = [...selectSet]
+      setSelectValue(selectArr[0])
+
+      // Return the updated state
+      return prevValues
+    })
+  }
+  // Search bar input change here
+  const handleSearchChange = (e) => {
+    setSearchValue(e.target.value)
+  }
+  // Search bar with button click here
   const handleSearchClick = () => {
     if (searchValue === '') return
     const filterStop = stopData.filter((stop) => {
@@ -99,7 +150,11 @@ export default function StopInfoPage () {
     const selectSet = new Set()
     filterStop.map((stop) => selectSet.add(stop.city))
     const selectArr = [...selectSet]
-    const city = taiwanCountiesAndCities.find((city) => city.chinese.includes(searchValue) || city.english.toLowerCase().includes(searchValue))
+    const city = taiwanCountiesAndCities.find(
+      (city) =>
+        city.chinese.includes(searchValue) ||
+        city.english.toLowerCase().includes(searchValue)
+    )
     if (selectArr.length > 0) {
       setSelectValue(selectArr[0])
     } else if (city !== undefined) {
@@ -108,6 +163,7 @@ export default function StopInfoPage () {
       setSelectValue('選擇縣市')
     }
   }
+  // Search bar with 'Enter' here
   const handleSearchKeyDown = (e) => {
     if (e.target.value === '') return
     if (e.key === 'Enter') {
@@ -138,6 +194,7 @@ export default function StopInfoPage () {
       }
     }
   }
+  // Pagination prev and next control here
   const handleArrowClick = (e) => {
     // console.log(e.target.id)
     if (e.target.id === 'prev' && currentPage !== 1) {
@@ -149,28 +206,11 @@ export default function StopInfoPage () {
       setCurrentPage(currentPage + 1)
     }
   }
+  // Pagination number control here
   const handlePageClick = (num) => {
     setCurrentPage(num)
   }
 
-  useEffect(() => {
-    const checkedDistricts = Object.keys(districtCheckItems).filter((district) => districtCheckItems[district])
-    // console.log(checkedDistricts)
-    if (checkedDistricts.length !== 0) {
-      setAllChecked(false)
-    }
-    if (checkedDistricts.length === 0) {
-      setFilterData(stopData)
-      return
-    }
-
-    const filterData = stopData.filter((stop) => checkedDistricts.includes(stop.sarea))
-    setFilterData(filterData)
-    const selectSet = new Set()
-    filterData.map((stop) => selectSet.add(stop.city))
-    const selectArr = [...selectSet]
-    setSelectValue(selectArr[0])
-  }, [districtCheckItems, stopData])
   useEffect(() => {
     const getBikeInfoAsync = async () => {
       try {
@@ -182,7 +222,8 @@ export default function StopInfoPage () {
           city: '台北市'
         }))
         const newTaipei = res2.map((obj) => ({
-          ...obj, city: '新北市'
+          ...obj,
+          city: '新北市'
         }))
         const taoyuan = res3.map((obj) => ({
           ...obj,
@@ -195,20 +236,32 @@ export default function StopInfoPage () {
         res.map((data) => {
           set.add(data.sarea)
         })
-        // const TaipeiArr = [...set]
+        const TaipeiArr = [...set]
         // console.log(TaipeiArr)
-        // const set2 = new Set()
-        // res2.map((data) => {
-        //   set2.add(data.sarea)
-        // })
-        // const newTaipeiArr = [...set2]
-        // const set3 = new Set()
-        // res3.map((data) => {
-        //   set3.add(data.sarea)
-        // })
-        // const taoyuanArr = [...set3]
-        // console.log(set)
-        setArea([...set])
+        const addTaipeiArr = TaipeiArr.map((dist) => {
+          return { city: '台北市', sarea: dist }
+        })
+        // console.log(addTaipeiArr)
+        const set2 = new Set()
+        res2.map((data) => {
+          set2.add(data.sarea)
+        })
+        const newTaipeiArr = [...set2]
+        const addNewTaipeiArr = newTaipeiArr.map((dist) => {
+          return { city: '新北市', sarea: dist }
+        })
+        // console.log(addNewTaipeiArr)
+        const set3 = new Set()
+        res3.map((data) => {
+          set3.add(data.sarea)
+        })
+        const taoyuanArr = [...set3]
+        const addTaoyuanArr = taoyuanArr.map((dist) => {
+          return { city: '桃園市', sarea: dist }
+        })
+        // console.log(addTaoyuanArr)
+        setArea([...addTaipeiArr, ...addNewTaipeiArr, ...addTaoyuanArr])
+        if (isAllChecked === true) setSarea([...addTaipeiArr])
       } catch (error) {
         console.error(error)
       } finally {
@@ -233,9 +286,15 @@ export default function StopInfoPage () {
       <Header />
       <MainSection>
         <MainTitle>站點資訊</MainTitle>
-        {isToggle && <OptionModal props={area} onToggleClose={handleToggleClose}/>}
+        {isToggle && (
+          <OptionModal
+            props={area}
+            onToggleClose={handleToggleClose}
+            onDistrictChange={handleDistrictChange}
+          />
+        )}
         <StopFilter
-          props={area}
+          props={sarea}
           onCityChange={handleCityChange}
           searchValue={searchValue}
           onSearchChange={handleSearchChange}
@@ -243,7 +302,6 @@ export default function StopInfoPage () {
           onSearchKeyDown={handleSearchKeyDown}
           isAllChecked={isAllChecked}
           onAllChange={handleAllChange}
-          isDistrictCheck={districtCheckItems}
           onDistrictChange={handleDistrictChange}
           isActive={isActive}
           selectValue={selectValue}

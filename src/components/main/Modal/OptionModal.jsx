@@ -10,9 +10,9 @@ import CloseIcon from '../../../assets/closeIcon.svg?react'
 export default function OptionModal ({
   props,
   onDistrictChange,
-  isDistrictCheck,
   onToggleClose
 }) {
+  const needProp = props.filter((prop) => prop.city !== '台北市')
   return (
     <ModalContainer>
       <CloseDiv>
@@ -21,14 +21,15 @@ export default function OptionModal ({
         </CloseBtn>
       </CloseDiv>
       <SelectionGrid>
-        {props.map((area) => {
+        {needProp.map((area) => {
           return (
             <DistrictCheckbox
-              key={area}
-              prop={area}
-              propId={area}
-              onCheckChange={onDistrictChange}
-              isChecked={isDistrictCheck}
+              key={area.sarea}
+              prop={area.sarea}
+              propId={area.sarea}
+              onCheckChange={(e) =>
+                onDistrictChange(area.sarea, e.target.checked)
+              }
             />
           )
         })}

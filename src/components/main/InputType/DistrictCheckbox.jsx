@@ -3,16 +3,23 @@ import styled from 'styled-components'
 import { colorList } from '../../../styled/colorLists'
 import { breakpoints } from '../../../styled/breakpoints'
 
-export default function DistrictCheckbox ({ prop, propId, isChecked, onCheckChange }) {
+export default function DistrictCheckbox ({ prop, propId, isChecked, onCheckChange, specificStyle }) {
   return (
     <>
-      <CheckboxLabel htmlFor={propId}>
+      <CheckboxLabel htmlFor={propId} style={specificStyle}>
         {prop}
-        <CheckboxInput type="checkbox" id={propId} name="option-input" value={propId} checked={isChecked} onChange={onCheckChange}/>
+        <CheckboxInput
+          type="checkbox"
+          id={propId}
+          name="option-input"
+          value={propId}
+          checked={isChecked}
+          onChange={onCheckChange}
+        />
         <CheckboxSpan></CheckboxSpan>
       </CheckboxLabel>
     </>
-  )
+  );
 }
 
 const CheckboxInput = styled.input`
@@ -46,11 +53,11 @@ const CheckboxLabel = styled.label`
   font-size: 16px;
   @media screen and (min-width: ${breakpoints.mobile}) {
     font-size: 18px;
-    &:last-child{
-      grid-column: 1/3;
-    }
   }
 `
+// &:last-child{
+//   grid-column: 1/3;
+// }
 const CheckboxSpan = styled.span`
   position: absolute;
   top: 50%;
