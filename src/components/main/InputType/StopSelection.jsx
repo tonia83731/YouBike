@@ -9,7 +9,8 @@ export default function StopSelection ({
   isAllChecked,
   onAllChange,
   onDistrictChange,
-  onMoreOptionClick
+  onMoreOptionClick,
+  districtCheckItems
 }) {
   return (
     <SelectionDiv>
@@ -30,12 +31,13 @@ export default function StopSelection ({
               key={area.sarea}
               prop={area.sarea}
               propId={area.sarea}
+              isChecked={districtCheckItems[area.sarea] || false}
               onCheckChange={(e) =>
                 onDistrictChange(area.sarea, e.target.checked)
               }
               specificStyle={{
                 gridColumn:
-                  (area.city === '台北市' && i === lastIndex) ? '1/3' : 'auto'
+                  area.city === '台北市' && i === lastIndex ? '1/3' : 'auto'
               }}
             />
           )

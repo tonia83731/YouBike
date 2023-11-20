@@ -19,7 +19,7 @@ export default function DistrictCheckbox ({ prop, propId, isChecked, onCheckChan
         <CheckboxSpan></CheckboxSpan>
       </CheckboxLabel>
     </>
-  );
+  )
 }
 
 const CheckboxInput = styled.input`

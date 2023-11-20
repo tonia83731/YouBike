@@ -64,26 +64,37 @@ export default function StopInfoPage () {
     if (city === '台北市') {
       const filterStop = stopData.filter((data) => data.city === '台北市')
       const filterArea = area.filter((area) => area.city === '台北市')
-      console.log(filterStop)
+      const checkItems = filterStop.reduce((acc, stop) => {
+        acc[stop.sarea] = true
+        return acc
+      }, {})
       setFilterData(filterStop)
       setSarea(filterArea)
+      setDistrictCheckItems(checkItems)
     } else if (city === '新北市') {
       const filterStop = stopData.filter((data) => data.city === '新北市')
       const filterArea = area.filter((area) => area.city === '新北市')
-      // console.log(filterData)
-      console.log(filterStop)
+      const checkItems = filterStop.reduce((acc, stop) => {
+        acc[stop.sarea] = true
+        return acc
+      }, {})
       setFilterData(filterStop)
       setSarea(filterArea)
+      setDistrictCheckItems(checkItems)
     } else if (city === '桃園市') {
       const filterStop = stopData.filter((data) => data.city === '桃園市')
       const filterArea = area.filter((area) => area.city === '桃園市')
-      // console.log(filterData)
-      console.log(filterStop)
+      const checkItems = filterStop.reduce((acc, stop) => {
+        acc[stop.sarea] = true
+        return acc
+      }, {})
       setFilterData(filterStop)
       setSarea(filterArea)
+      setDistrictCheckItems(checkItems)
     } else {
       setFilterData([])
       setSarea([])
+      setDistrictCheckItems({})
     }
   }
   // '全部勾選' option change => when click then everything change back to default
@@ -107,10 +118,12 @@ export default function StopInfoPage () {
       const checkedDistricts = Object.keys(prevValues).filter(
         (district) => prevValues[district]
       )
-      if (checkedDistricts.length === 0) {
+      if (Object.keys(prevValues).length === 0) {
+        // edit here
         setAllChecked(true)
-        setSelectValue('選擇縣市')
+        setSearchValue('')
         setFilterData(stopData)
+        setSelectValue('選擇縣市')
         return
       }
       if (checkedDistricts.length > 0) setAllChecked(false)
@@ -130,6 +143,7 @@ export default function StopInfoPage () {
       // Return the updated state
       return prevValues
     })
+    // console.log(districtCheckItems)
   }
   // Search bar input change here
   const handleSearchChange = (e) => {
@@ -145,16 +159,23 @@ export default function StopInfoPage () {
         stop.sna.includes(searchValue)
       )
     })
+    // console.log(filterStop)
     setAllChecked(false)
     setFilterData(filterStop)
     const selectSet = new Set()
+    // const checkedSet = new Set()
     filterStop.map((stop) => selectSet.add(stop.city))
+    const checkItems = filterStop.reduce((acc, stop) => {
+      acc[stop.sarea] = true
+      return acc
+    }, {})
     const selectArr = [...selectSet]
     const city = taiwanCountiesAndCities.find(
       (city) =>
         city.chinese.includes(searchValue) ||
         city.english.toLowerCase().includes(searchValue)
     )
+    setDistrictCheckItems(checkItems)
     if (selectArr.length > 0) {
       setSelectValue(selectArr[0])
     } else if (city !== undefined) {
@@ -178,13 +199,17 @@ export default function StopInfoPage () {
       setAllChecked(false)
       const selectSet = new Set()
       filterStop.map((stop) => selectSet.add(stop.city))
+      const checkItems = filterStop.reduce((acc, stop) => {
+        acc[stop.sarea] = true
+        return acc
+      }, {})
       const selectArr = [...selectSet]
       const city = taiwanCountiesAndCities.find(
         (city) =>
           city.chinese.includes(searchValue) ||
           city.english.toLowerCase().includes(searchValue)
       )
-
+      setDistrictCheckItems(checkItems)
       if (selectArr.length > 0) {
         setSelectValue(selectArr[0])
       } else if (city !== undefined) {
@@ -302,6 +327,7 @@ export default function StopInfoPage () {
           onSearchKeyDown={handleSearchKeyDown}
           isAllChecked={isAllChecked}
           onAllChange={handleAllChange}
+          districtCheckItems={districtCheckItems}
           onDistrictChange={handleDistrictChange}
           isActive={isActive}
           selectValue={selectValue}

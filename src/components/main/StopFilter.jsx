@@ -15,6 +15,7 @@ export default function StopFilter ({
   onSearchKeyDown,
   isAllChecked,
   onAllChange,
+  districtCheckItems,
   onDistrictChange,
   isActive,
   selectValue,
@@ -42,6 +43,7 @@ export default function StopFilter ({
           props={props}
           isAllChecked={isAllChecked}
           onAllChange={onAllChange}
+          districtCheckItems={districtCheckItems}
           onDistrictChange={onDistrictChange}
           onMoreOptionClick={onMoreOptionClick}
         />
