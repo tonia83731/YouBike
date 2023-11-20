@@ -118,13 +118,12 @@ export default function StopInfoPage () {
       const checkedDistricts = Object.keys(prevValues).filter(
         (district) => prevValues[district]
       )
-      if (Object.keys(prevValues).length === 0) {
-        // edit here
+      if (checkedDistricts.length === 0) {
         setAllChecked(true)
         setSearchValue('')
         setFilterData(stopData)
         setSelectValue('選擇縣市')
-        return
+        return prevValues
       }
       if (checkedDistricts.length > 0) setAllChecked(false)
 
