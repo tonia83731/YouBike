@@ -16,6 +16,7 @@ import StopFilter from '../components/main/StopFilter'
 import StopTable from '../components/main/StopTable'
 import Pagination from '../components/main/pagination/pagination'
 import OptionModal from '../components/main/Modal/OptionModal'
+import { check } from 'prettier'
 
 export default function StopInfoPage () {
   const [isLoading, setIsLoading] = useState(true)
@@ -58,43 +59,70 @@ export default function StopInfoPage () {
     setIsActive(false)
   }
   // Dropdown menu option change here
+  // const handleCityChange = (city) => {
+  //   setAllChecked(false)
+  //   setDistrictCheckItems({})
+  //   if (city === '台北市') {
+  //     const filterStop = stopData.filter((data) => data.city === '台北市')
+  //     const filterArea = area.filter((area) => area.city === '台北市')
+  //     const checkItems = filterStop.reduce((acc, stop) => {
+  //       acc[stop.sarea] = true
+  //       return acc
+  //     }, {})
+  //     setFilterData(filterStop)
+  //     setSarea(filterArea)
+  //     setDistrictCheckItems(checkItems)
+  //   } else if (city === '新北市') {
+  //     const filterStop = stopData.filter((data) => data.city === '新北市')
+  //     const filterArea = area.filter((area) => area.city === '新北市')
+  //     const checkItems = filterStop.reduce((acc, stop) => {
+  //       acc[stop.sarea] = true
+  //       return acc
+  //     }, {})
+  //     setFilterData(filterStop)
+  //     setSarea(filterArea)
+  //     setDistrictCheckItems(checkItems)
+  //   } else if (city === '桃園市') {
+  //     const filterStop = stopData.filter((data) => data.city === '桃園市')
+  //     const filterArea = area.filter((area) => area.city === '桃園市')
+  //     const checkItems = filterStop.reduce((acc, stop) => {
+  //       acc[stop.sarea] = true
+  //       return acc
+  //     }, {})
+  //     setFilterData(filterStop)
+  //     setSarea(filterArea)
+  //     setDistrictCheckItems(checkItems)
+  //   } else {
+  //     setFilterData([])
+  //     setSarea([])
+  //     setDistrictCheckItems({})
+  //   }
+  // }
   const handleCityChange = (city) => {
+    const filterByCity = (targetCity) => {
+      const filterStop = stopData.filter(data => data.city === targetCity)
+      const filterArea = area.filter(area => area.city === targetCity)
+      const checkItems = filterStop.reduce((acc, stop) => {
+        acc[stop.sarea] = true
+        return acc
+      }, {})
+      setFilterData(filterStop)
+      setSarea(filterArea)
+      setDistrictCheckItems(checkItems)
+    }
     setAllChecked(false)
     setDistrictCheckItems({})
-    if (city === '台北市') {
-      const filterStop = stopData.filter((data) => data.city === '台北市')
-      const filterArea = area.filter((area) => area.city === '台北市')
-      const checkItems = filterStop.reduce((acc, stop) => {
-        acc[stop.sarea] = true
-        return acc
-      }, {})
-      setFilterData(filterStop)
-      setSarea(filterArea)
-      setDistrictCheckItems(checkItems)
-    } else if (city === '新北市') {
-      const filterStop = stopData.filter((data) => data.city === '新北市')
-      const filterArea = area.filter((area) => area.city === '新北市')
-      const checkItems = filterStop.reduce((acc, stop) => {
-        acc[stop.sarea] = true
-        return acc
-      }, {})
-      setFilterData(filterStop)
-      setSarea(filterArea)
-      setDistrictCheckItems(checkItems)
-    } else if (city === '桃園市') {
-      const filterStop = stopData.filter((data) => data.city === '桃園市')
-      const filterArea = area.filter((area) => area.city === '桃園市')
-      const checkItems = filterStop.reduce((acc, stop) => {
-        acc[stop.sarea] = true
-        return acc
-      }, {})
-      setFilterData(filterStop)
-      setSarea(filterArea)
-      setDistrictCheckItems(checkItems)
-    } else {
-      setFilterData([])
-      setSarea([])
-      setDistrictCheckItems({})
+
+    switch (city) {
+      case '台北市':
+      case '新北市':
+      case '桃園市':
+        filterByCity(city)
+        break
+      default:
+        setFilterData([])
+        setSarea([])
+        setDistrictCheckItems({})
     }
   }
   // '全部勾選' option change => when click then everything change back to default
