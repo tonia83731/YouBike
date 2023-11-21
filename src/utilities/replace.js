@@ -1,3 +1,3 @@
-export function replace(string) {
-  return string.replace("YouBike2.0_", "");
+export function replace (string) {
+  return string.replace('YouBike2.0_', '')
 }
