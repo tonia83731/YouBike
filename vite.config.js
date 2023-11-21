@@ -4,9 +4,6 @@ import svgr from 'vite-plugin-svgr'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), svgr()],
-  base: '/YouBike/',
-  optimizeDeps: {
-    include: ['@svgr/webpack']
-  }
+  plugins: [svgr(), react()],
+  base: '/YouBike/'
 })
