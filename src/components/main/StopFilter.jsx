@@ -46,7 +46,6 @@ export default function StopFilter ({
           onAllChange={onAllChange}
           districtCheckItems={districtCheckItems}
           onDistrictChange={onDistrictChange}
-          onMoreOptionClick={onMoreOptionClick}
         />
       </div>
       <StopFilterImg>

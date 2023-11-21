@@ -55,9 +55,6 @@ const CheckboxLabel = styled.label`
     font-size: 18px;
   }
 `
-// &:last-child{
-//   grid-column: 1/3;
-// }
 const CheckboxSpan = styled.span`
   position: absolute;
   top: 50%;

@@ -2,14 +2,12 @@
 import styled from 'styled-components'
 import { breakpoints } from '../../../styled/breakpoints'
 import DistrictCheckbox from './DistrictCheckbox'
-import { colorList } from '../../../styled/colorLists'
 
 export default function StopSelection ({
   props,
   isAllChecked,
   onAllChange,
   onDistrictChange,
-  onMoreOptionClick,
   districtCheckItems
 }) {
   return (
@@ -21,7 +19,6 @@ export default function StopSelection ({
           isChecked={isAllChecked}
           onCheckChange={onAllChange}
         />
-        {isAllChecked ? <MoreBtn onClick={onMoreOptionClick}>更多選項</MoreBtn> : ''}
       </TopFlex>
       <SelectionGrid>
         {props.map((area, i) => {
@@ -68,15 +65,15 @@ const TopFlex = styled.div`
   justify-content: space-between;
   align-items: center;
 `
-const MoreBtn = styled.button`
-  font-size: 16px;
-  text-decoration: underline;
-  align-self: end;
-  color: ${colorList.gray_table_border};
-  &:focus {
-    outline: none;
-  }
-`
+// const MoreBtn = styled.button`
+//   font-size: 16px;
+//   text-decoration: underline;
+//   align-self: end;
+//   color: ${colorList.gray_table_border};
+//   &:focus {
+//     outline: none;
+//   }
+// `
 
 // const SelectionBtn = styled.button`
 //   grid-column: 4/5;

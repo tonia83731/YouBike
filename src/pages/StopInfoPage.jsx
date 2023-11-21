@@ -7,16 +7,10 @@ import { breakpoints } from '../styled/breakpoints'
 import { taiwanCountiesAndCities } from '../data/ubikecityData'
 import Header from '../components/Header'
 import { MainSection, MainTitle } from './InstructionPage'
-import {
-  getTaipeiBikeInfo,
-  getNewTaipeiBikeInfo,
-  getTaoyuanBikeInfo
-} from '../api/getYoubikeInfo'
+import { getTaipeiBikeInfo } from '../api/getYoubikeInfo'
 import StopFilter from '../components/main/StopFilter'
 import StopTable from '../components/main/StopTable'
 import Pagination from '../components/main/pagination/Pagination'
-import OptionModal from '../components/main/Modal/OptionModal'
-// import { check } from 'prettier'
 
 export default function StopInfoPage () {
   const [isLoading, setIsLoading] = useState(true)
@@ -31,7 +25,6 @@ export default function StopInfoPage () {
   const [districtCheckItems, setDistrictCheckItems] = useState({})
   const [isActive, setIsActive] = useState(false)
   const [selectValue, setSelectValue] = useState('選擇縣市')
-  const [isToggle, setIsToggle] = useState(false)
 
   // Pagination setting here
   const perPage = 10
@@ -41,14 +34,6 @@ export default function StopInfoPage () {
   const nPage = Math.ceil(filterData.length / perPage)
   const nums = [...Array(nPage + 1).keys()].slice(1)
 
-  // More option toggle open here
-  const handleMoreOptionClick = () => {
-    setIsToggle(!isToggle)
-  }
-  // More option toggle close here
-  const handleToggleClose = () => {
-    setIsToggle(false)
-  }
   // Dropdown menu bar active here
   const handleDropdown = () => {
     setIsActive(!isActive)
@@ -61,8 +46,8 @@ export default function StopInfoPage () {
   // city change to change option
   const handleCityChange = (city) => {
     const filterByCity = (targetCity) => {
-      const filterStop = stopData.filter(data => data.city === targetCity)
-      const filterArea = area.filter(area => area.city === targetCity)
+      const filterStop = stopData.filter((data) => data.city === targetCity)
+      const filterArea = area.filter((area) => area.city === targetCity)
       const checkItems = filterStop.reduce((acc, stop) => {
         acc[stop.sarea] = true
         return acc
@@ -76,8 +61,6 @@ export default function StopInfoPage () {
 
     switch (city) {
       case '台北市':
-      case '新北市':
-      case '桃園市':
         filterByCity(city)
         break
       default:
@@ -181,44 +164,8 @@ export default function StopInfoPage () {
   }
   // Search bar with 'Enter' here
   const handleSearchKeyDown = (e) => {
-    if (searchValue === '') return
-
-    const filterStop = stopData.filter((stop) => {
-      return (
-        stop.city.includes(searchValue) ||
-         stop.sarea.includes(searchValue) ||
-         stop.sna.includes(searchValue)
-      )
-    })
-
-    setAllChecked(false)
-    setFilterData(filterStop)
-
-    const selectSet = new Set(filterStop.map((stop) => stop.city))
-    const selectedCity = [...selectSet][0]
-    const selectArea = area.filter((area) => area.city === selectedCity)
-
-    setSarea(selectArea)
-
-    const checkItems = filterStop.reduce((acc, stop) => {
-      acc[stop.sarea] = true
-      return acc
-    }, {})
-
-    setDistrictCheckItems(checkItems)
-
-    const city = taiwanCountiesAndCities.find(
-      (city) =>
-        city.chinese.includes(searchValue) ||
-         city.english.toLowerCase().includes(searchValue)
-    )
-
-    if (selectedCity) {
-      setSelectValue(selectedCity)
-    } else if (city) {
-      setSelectValue(city.chinese)
-    } else {
-      setSelectValue('選擇縣市')
+    if (e.key === 'Enter') {
+      handleSearchClick()
     }
   }
   // Pagination prev and next control here
@@ -242,52 +189,23 @@ export default function StopInfoPage () {
     const getBikeInfoAsync = async () => {
       try {
         const res = await getTaipeiBikeInfo()
-        const res2 = await getNewTaipeiBikeInfo()
-        const res3 = await getTaoyuanBikeInfo()
         const taipei = res.map((obj) => ({
           ...obj,
           city: '台北市'
         }))
-        const newTaipei = res2.map((obj) => ({
-          ...obj,
-          city: '新北市'
-        }))
-        const taoyuan = res3.map((obj) => ({
-          ...obj,
-          city: '桃園市'
-        }))
 
-        setStopData([...taipei, ...newTaipei, ...taoyuan])
-        setFilterData([...taipei, ...newTaipei, ...taoyuan])
+        setStopData([...taipei])
+        setFilterData([...taipei])
         const set = new Set()
         res.map((data) => {
           set.add(data.sarea)
         })
         const TaipeiArr = [...set]
-        // console.log(TaipeiArr)
         const addTaipeiArr = TaipeiArr.map((dist) => {
           return { city: '台北市', sarea: dist }
         })
-        // console.log(addTaipeiArr)
-        const set2 = new Set()
-        res2.map((data) => {
-          set2.add(data.sarea)
-        })
-        const newTaipeiArr = [...set2]
-        const addNewTaipeiArr = newTaipeiArr.map((dist) => {
-          return { city: '新北市', sarea: dist }
-        })
-        // console.log(addNewTaipeiArr)
-        const set3 = new Set()
-        res3.map((data) => {
-          set3.add(data.sarea)
-        })
-        const taoyuanArr = [...set3]
-        const addTaoyuanArr = taoyuanArr.map((dist) => {
-          return { city: '桃園市', sarea: dist }
-        })
-        // console.log(addTaoyuanArr)
-        setArea([...addTaipeiArr, ...addNewTaipeiArr, ...addTaoyuanArr])
+
+        setArea([...addTaipeiArr])
         if (isAllChecked === true) setSarea([...addTaipeiArr])
       } catch (error) {
         console.error(error)
@@ -313,13 +231,6 @@ export default function StopInfoPage () {
       <Header />
       <MainSection>
         <MainTitle>站點資訊</MainTitle>
-        {isToggle && (
-          <OptionModal
-            props={area}
-            onToggleClose={handleToggleClose}
-            onDistrictChange={handleDistrictChange}
-          />
-        )}
         <StopFilter
           props={sarea}
           onCityChange={handleCityChange}
@@ -336,7 +247,6 @@ export default function StopInfoPage () {
           onOptionClick={handleOptionClick}
           onDropdown={handleDropdown}
           cityProps={taiwanCountiesAndCities}
-          onMoreOptionClick={handleMoreOptionClick}
         />
         <StopTable props={stop} />
         <Pagination
