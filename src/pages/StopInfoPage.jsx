@@ -14,7 +14,7 @@ import {
 } from '../api/getYoubikeInfo'
 import StopFilter from '../components/main/StopFilter'
 import StopTable from '../components/main/StopTable'
-import Pagination from '../components/main/pagination/pagination'
+import Pagination from '../components/main/pagination/Pagination'
 import OptionModal from '../components/main/Modal/OptionModal'
 // import { check } from 'prettier'
 
