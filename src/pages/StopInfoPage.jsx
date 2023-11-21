@@ -179,6 +179,7 @@ export default function StopInfoPage () {
   // Search bar with button click here
   const handleSearchClick = () => {
     if (searchValue === '') return
+
     const filterStop = stopData.filter((stop) => {
       return (
         stop.city.includes(searchValue) ||
@@ -186,74 +187,77 @@ export default function StopInfoPage () {
         stop.sna.includes(searchValue)
       )
     })
-    // console.log(filterStop)
+
     setAllChecked(false)
     setFilterData(filterStop)
-    // setSarea(filterArea)
-    const selectSet = new Set()
-    filterStop.map((stop) => selectSet.add(stop.city))
-    // console.log(selectSet)
-    const selectArea = area.filter(area => area.city === [...selectSet][0])
-    // console.log(selectArea)
+
+    const selectSet = new Set(filterStop.map((stop) => stop.city))
+    const selectedCity = [...selectSet][0]
+    const selectArea = area.filter((area) => area.city === selectedCity)
+
     setSarea(selectArea)
+
     const checkItems = filterStop.reduce((acc, stop) => {
       acc[stop.sarea] = true
       return acc
     }, {})
-    const selectArr = [...selectSet]
+
+    setDistrictCheckItems(checkItems)
+
     const city = taiwanCountiesAndCities.find(
       (city) =>
         city.chinese.includes(searchValue) ||
         city.english.toLowerCase().includes(searchValue)
     )
-    setDistrictCheckItems(checkItems)
-    if (selectArr.length > 0) {
-      setSelectValue(selectArr[0])
-      // const areaShow = area.filter((area) => area.city === selectValue)
-      // console.log(areaShow)
-      // setSarea(areaShow)
-    } else if (city !== undefined) {
+
+    if (selectedCity) {
+      setSelectValue(selectedCity)
+    } else if (city) {
       setSelectValue(city.chinese)
-      // const areaShow = area.filter((area) => area.city === selectValue);
-      // console.log(areaShow)
-      // setSarea(areaShow)
     } else {
       setSelectValue('選擇縣市')
     }
   }
   // Search bar with 'Enter' here
   const handleSearchKeyDown = (e) => {
-    if (e.target.value === '') return
-    if (e.key === 'Enter') {
-      const filterStop = stopData.filter((stop) => {
-        return (
-          stop.city.includes(searchValue) ||
-          stop.sarea.includes(searchValue) ||
-          stop.sna.includes(searchValue)
-        )
-      })
-      setFilterData(filterStop)
-      setAllChecked(false)
-      const selectSet = new Set()
-      filterStop.map((stop) => selectSet.add(stop.city))
-      const checkItems = filterStop.reduce((acc, stop) => {
-        acc[stop.sarea] = true
-        return acc
-      }, {})
-      const selectArr = [...selectSet]
-      const city = taiwanCountiesAndCities.find(
-        (city) =>
-          city.chinese.includes(searchValue) ||
-          city.english.toLowerCase().includes(searchValue)
+    if (searchValue === '') return
+
+    const filterStop = stopData.filter((stop) => {
+      return (
+        stop.city.includes(searchValue) ||
+         stop.sarea.includes(searchValue) ||
+         stop.sna.includes(searchValue)
       )
-      setDistrictCheckItems(checkItems)
-      if (selectArr.length > 0) {
-        setSelectValue(selectArr[0])
-      } else if (city !== undefined) {
-        setSelectValue(city.chinese)
-      } else {
-        setSelectValue('選擇縣市')
-      }
+    })
+
+    setAllChecked(false)
+    setFilterData(filterStop)
+
+    const selectSet = new Set(filterStop.map((stop) => stop.city))
+    const selectedCity = [...selectSet][0]
+    const selectArea = area.filter((area) => area.city === selectedCity)
+
+    setSarea(selectArea)
+
+    const checkItems = filterStop.reduce((acc, stop) => {
+      acc[stop.sarea] = true
+      return acc
+    }, {})
+
+    setDistrictCheckItems(checkItems)
+
+    const city = taiwanCountiesAndCities.find(
+      (city) =>
+        city.chinese.includes(searchValue) ||
+         city.english.toLowerCase().includes(searchValue)
+    )
+
+    if (selectedCity) {
+      setSelectValue(selectedCity)
+    } else if (city) {
+      setSelectValue(city.chinese)
+    } else {
+      setSelectValue('選擇縣市')
     }
   }
   // Pagination prev and next control here
