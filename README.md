@@ -18,6 +18,8 @@ This project is available in mobile, tablet and desktop. And the page that curre
 * The user can use search bar to search for the city, region or station name
 * The user can click on the checkbox for distriction to filter the table data
 
+For live demo please go to: https://codesandbox.io/s/youbike-tfwnmp?file=/src/App.jsx:674-684
+
 ## Demo Page Link
 https://tonia83731.github.io/YouBike/
 
