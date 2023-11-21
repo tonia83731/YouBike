@@ -58,46 +58,7 @@ export default function StopInfoPage () {
     setSelectValue(e.target.value)
     setIsActive(false)
   }
-  // Dropdown menu option change here
-  // const handleCityChange = (city) => {
-  //   setAllChecked(false)
-  //   setDistrictCheckItems({})
-  //   if (city === '台北市') {
-  //     const filterStop = stopData.filter((data) => data.city === '台北市')
-  //     const filterArea = area.filter((area) => area.city === '台北市')
-  //     const checkItems = filterStop.reduce((acc, stop) => {
-  //       acc[stop.sarea] = true
-  //       return acc
-  //     }, {})
-  //     setFilterData(filterStop)
-  //     setSarea(filterArea)
-  //     setDistrictCheckItems(checkItems)
-  //   } else if (city === '新北市') {
-  //     const filterStop = stopData.filter((data) => data.city === '新北市')
-  //     const filterArea = area.filter((area) => area.city === '新北市')
-  //     const checkItems = filterStop.reduce((acc, stop) => {
-  //       acc[stop.sarea] = true
-  //       return acc
-  //     }, {})
-  //     setFilterData(filterStop)
-  //     setSarea(filterArea)
-  //     setDistrictCheckItems(checkItems)
-  //   } else if (city === '桃園市') {
-  //     const filterStop = stopData.filter((data) => data.city === '桃園市')
-  //     const filterArea = area.filter((area) => area.city === '桃園市')
-  //     const checkItems = filterStop.reduce((acc, stop) => {
-  //       acc[stop.sarea] = true
-  //       return acc
-  //     }, {})
-  //     setFilterData(filterStop)
-  //     setSarea(filterArea)
-  //     setDistrictCheckItems(checkItems)
-  //   } else {
-  //     setFilterData([])
-  //     setSarea([])
-  //     setDistrictCheckItems({})
-  //   }
-  // }
+  // city change to change option
   const handleCityChange = (city) => {
     const filterByCity = (targetCity) => {
       const filterStop = stopData.filter(data => data.city === targetCity)
