@@ -33,7 +33,7 @@ export default function Header () {
         <NavList>
           <NavItem>
             <NavLink
-              to="/"
+              to="/YouBike/"
               className={({ isActive }) => (isActive ? 'active' : '')}
             >
               使用說明
@@ -41,7 +41,7 @@ export default function Header () {
           </NavItem>
           <NavItem>
             <NavLink
-              to="/payment"
+              to="/YouBike/payment"
               className={({ isActive }) => (isActive ? 'active' : '')}
             >
               收費方式
@@ -49,7 +49,7 @@ export default function Header () {
           </NavItem>
           <NavItem>
             <NavLink
-              to="/stop-info"
+              to="/YouBike/stop-info"
               className={({ isActive }) => (isActive ? 'active' : '')}
             >
               站點資訊
@@ -57,7 +57,7 @@ export default function Header () {
           </NavItem>
           <NavItem>
             <NavLink
-              to="/news"
+              to="/YouBike/news"
               className={({ isActive }) => (isActive ? 'active' : '')}
             >
               最新消息
@@ -65,7 +65,7 @@ export default function Header () {
           </NavItem>
           <NavItem>
             <NavLink
-              to="/event"
+              to="/YouBike/event"
               className={({ isActive }) => (isActive ? 'active' : '')}
             >
               活動專區
@@ -73,11 +73,11 @@ export default function Header () {
           </NavItem>
         </NavList>
         <LoginBtn className="forMobile">
-          <Link to="/login">登入</Link>
+          <Link to="/YouBike/login">登入</Link>
         </LoginBtn>
       </NavBar>
       <LoginBtn className="forDesktop">
-        <Link to="/login">登入</Link>
+        <Link to="/YouBike/login">登入</Link>
       </LoginBtn>
     </SiteHeader>
   )

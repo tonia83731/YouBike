@@ -15,12 +15,12 @@ function App () {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<InstructionPage />}></Route>
-          <Route path="/payment" element={<PaymentPage />}></Route>
-          <Route path="/stop-info" element={<StopInfoPage />}></Route>
-          <Route path="/news" element={<NewsPage />}></Route>
-          <Route path="/event" element={<EventPage />}></Route>
-          <Route path="/login" element={<LoginPage/>}></Route>
+          <Route path="/YouBike/" element={<InstructionPage />}></Route>
+          <Route path="/YouBike/payment" element={<PaymentPage />}></Route>
+          <Route path="/YouBike/stop-info" element={<StopInfoPage />}></Route>
+          <Route path="/YouBike/news" element={<NewsPage />}></Route>
+          <Route path="/YouBike/event" element={<EventPage />}></Route>
+          <Route path="/YouBike/login" element={<LoginPage />}></Route>
         </Routes>
       </BrowserRouter>
     </>
