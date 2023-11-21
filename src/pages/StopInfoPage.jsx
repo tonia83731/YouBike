@@ -16,7 +16,7 @@ import StopFilter from '../components/main/StopFilter'
 import StopTable from '../components/main/StopTable'
 import Pagination from '../components/main/pagination/pagination'
 import OptionModal from '../components/main/Modal/OptionModal'
-import { check } from 'prettier'
+// import { check } from 'prettier'
 
 export default function StopInfoPage () {
   const [isLoading, setIsLoading] = useState(true)
@@ -189,9 +189,13 @@ export default function StopInfoPage () {
     // console.log(filterStop)
     setAllChecked(false)
     setFilterData(filterStop)
+    // setSarea(filterArea)
     const selectSet = new Set()
-    // const checkedSet = new Set()
     filterStop.map((stop) => selectSet.add(stop.city))
+    // console.log(selectSet)
+    const selectArea = area.filter(area => area.city === [...selectSet][0])
+    // console.log(selectArea)
+    setSarea(selectArea)
     const checkItems = filterStop.reduce((acc, stop) => {
       acc[stop.sarea] = true
       return acc
@@ -205,8 +209,14 @@ export default function StopInfoPage () {
     setDistrictCheckItems(checkItems)
     if (selectArr.length > 0) {
       setSelectValue(selectArr[0])
+      // const areaShow = area.filter((area) => area.city === selectValue)
+      // console.log(areaShow)
+      // setSarea(areaShow)
     } else if (city !== undefined) {
       setSelectValue(city.chinese)
+      // const areaShow = area.filter((area) => area.city === selectValue);
+      // console.log(areaShow)
+      // setSarea(areaShow)
     } else {
       setSelectValue('選擇縣市')
     }

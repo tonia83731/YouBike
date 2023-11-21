@@ -25,7 +25,7 @@ export default function OptionModal ({
           return (
             <DistrictCheckbox
               key={area.sarea}
-              prop={area.sarea}
+              prop={`${area.city} ${area.sarea}`}
               propId={area.sarea}
               onCheckChange={(e) =>
                 onDistrictChange(area.sarea, e.target.checked)
