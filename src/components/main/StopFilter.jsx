@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
 import styled from 'styled-components'
 import { breakpoints } from '../../styled/breakpoints'
-import Frame from '../../assets/Frame.svg?react'
+// import Frame from '../../assets/Frame.svg?react'
+import { ReactComponent as Frame } from '../../assets/Frame.svg'
 
 import StopSearch from './InputType/StopSearch'
 import StopSelection from './InputType/StopSelection'
