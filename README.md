@@ -11,7 +11,7 @@ Currently, two official plugins are available:
 
 ## Introduction
 
-This project is available in mobile, tablet and desktop. And the page that currently done is https://tonia83731.github.io/YouBike/stop-info
+This project is available in mobile, tablet and desktop. And the page that currently done is at .../stop-info route
 
 * The user can view all Youbike station in Taipei, including their distriction, stop name, total stop and available parking stop
 * The user can use dropdown list to search for different city data (currently only Taipei city available)
